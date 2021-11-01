@@ -55,10 +55,10 @@
                 <!-- Left links -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Accueil</a>
+                        <a class="nav-link" href="index.html">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="model.html">Model</a>
+                        <a class="nav-link active" href="model.html">Model</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="slider.html">Slider</a>
@@ -70,14 +70,26 @@
         </nav>
         <!-- Navbar -->
     </div>
-    <div class="container my-2">
-        <div x-data="{ text: false }">
-            <button class="btn btn-primary" @click="text = !text">Voir le texte</button>
-         
-            <span x-show="text">
-              Mon texte est visible !
-            </span>
+
+    <div class="container">
+        <div x-data="{ prenom: '' }">
+            <input type="text" x-model="prenom" class="form-control">
+            <span x-text="prenom.length" x-show="prenom.length >= 1"></span>
         </div>
+
+        <hr class="my-5">
+
+        <form x-data="{ 
+                prenom: '',
+                dataToLowerCase() {
+                    this.prenom = this.prenom.toLowerCase()
+                    console.log(this.prenom)
+                    this.prenom = ''
+                }
+            }" @submit.prevent="dataToLowerCase">
+            <input type="text" x-model="prenom" class="form-control">
+            <button class="btn btn-primary mt-1">Valider</button>
+        </form>
     </div>
 
     <!-- MDB -->
