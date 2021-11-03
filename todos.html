@@ -98,7 +98,6 @@
                     {id: 2, title: 'Ma deuxième tâche', status: false},
                     {id: 3, title: 'Ma troisème tâche', status: false},
                 ],
-                selectedTodos: [],
                 todoInput: '',
                 addTodo() {
                     if (this.todos.length > 0) {
@@ -121,8 +120,8 @@
 
             <template x-for="todo, index in todos" :key="todo.id">
                 <div class="row mt-1 align-items-center">
-                    <input type="checkbox" x-bind:value="todo.id" x-bind:id="todo.id" class="col-1" x-model.number="selectedTodos">
-                    <label x-bind:for="todo.id" x-text="todo.title" class="col-2" x-bind:class="{'p_style' : selectedTodos.includes(todo.id)}"></label>
+                    <input type="checkbox" x-bind:value="todo.id" x-bind:id="todo.id" class="col-1" x-model.number="todo.status">
+                    <label x-bind:for="todo.id" x-text="todo.title" class="col-2" x-bind:class="{'p_style' : todo.status}"></label>
                     <button class="btn btn-danger col-2" @click="removeTodo(index)">Supprimer</button>
                 </div>
             </template>
