@@ -71,9 +71,38 @@
         <!-- Navbar -->
     </div>
 
-    <div class="container">
-        
-    </div>
+    <section class="container my-3" x-data="{ image: 'image1' }">
+        <h1>Mon slider Alpine JS</h1>
+        <img src="./assets/img/image1.jfif" class="rounded w-50" alt="image 1" x-show="image === 'image1'">
+        <img src="./assets/img/image2.jfif" class="rounded w-50" alt="image 2" x-show="image === 'image2'">
+        <img src="./assets/img/image3.jfif" class="rounded w-50" alt="image 3" x-show="image === 'image3'">
+        <div class="row items-center mt-3 gx-0">
+            <div x-bind:class="image === 'image1' ? 'border border-warning' : ''" 
+                class="bg-image hover-overlay ripple col-1" 
+                @click="image = 'image1'" 
+                style="cursor: pointer;"
+            >
+                <img src="./assets/img/image1.jfif" class="img-fluid" />
+                <div class="mask" style="background-color: rgba(57, 192, 237, 0.2);"></div>
+            </div>
+            <div x-bind:class="image === 'image2' ? 'border border-warning' : ''"
+                class="bg-image hover-overlay ripple col-1 mx-3" 
+                @click="image = 'image2'" 
+                style="cursor: pointer;"
+            >
+                <img src="./assets/img/image2.jfif" class="img-fluid" />
+                <div class="mask" style="background-color: rgba(57, 192, 237, 0.2);"></div>
+            </div>
+            <div x-bind:class="image === 'image3' ? 'border border-warning' : ''"
+                class="bg-image hover-overlay ripple col-1" 
+                @click="image = 'image3'" 
+                style="cursor: pointer;"
+            >
+                <img src="./assets/img/image3.jfif" class="img-fluid" />
+                <div class="mask" style="background-color: rgba(57, 192, 237, 0.2);"></div>
+            </div>
+        </div>
+    </section>
 
     <!-- MDB -->
     <script
