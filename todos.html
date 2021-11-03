@@ -21,6 +21,12 @@
     rel="stylesheet"
     />
     <title>Alpine JS 3</title>
+    <style>
+        .p_style {
+            text-decoration: line-through;
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
     <div class="mb-2">
@@ -64,7 +70,7 @@
                         <a class="nav-link" href="slider.html">Slider</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="checkbox.html">Checkbox</a>
+                        <a class="nav-link" href="checkbox.html">Checkbox</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="bind.html">x-bind</a>
@@ -73,7 +79,7 @@
                         <a class="nav-link" href="boucle.html">x-for</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="todos.html">ToDo's</a>
+                        <a class="nav-link active" href="todos.html">ToDo's</a>
                     </li>
                 </ul>
                 <!-- Left links -->
@@ -83,40 +89,47 @@
         <!-- Navbar -->
     </div>
 
-    <section class="container my-3" x-data="{ remember: false }">
-        <form class="row gx-0" @submit.prevent="console.log(remember)">
-            <div>
-                <input type="checkbox" name="remember" id="remember" x-model="remember">
-                <label for="remember">Se souvenir de moi</label>
-            </div>
-            <div class="mt-2">
-                <button class="btn btn-primary">Se connecter</button>
-            </div>
-            <span x-show="remember">Choix mémorisé</span>
-        </form>
-    </section>
+    <main class="container my-3">
 
-    <hr class="my-3">
+        <section x-data="
+            { 
+                todos: [
+                    {id: 1, title: 'Ma première tâche', status: false},
+                    {id: 2, title: 'Ma deuxième tâche', status: false},
+                    {id: 3, title: 'Ma troisème tâche', status: false},
+                ],
+                selectedTodos: [],
+                todoInput: '',
+                addTodo() {
+                    if (this.todos.length > 0) {
+                        this.todos.push({id: this.todos[this.todos.length-1].id + 1, title: this.todoInput})
+                    } else {
+                        this.todos.push({id: 1, title: this.todoInput})
+                    }
+                    this.todoInput = ''
+                },
+                removeTodo(index)  {
+                    this.todos.splice(index, 1)
+                }
+            }
+        ">
+            <h1>ToDo's</h1>
 
-    <section class="container my-3">
-        <form x-data="{ books: [] }" @submit.prevent="console.log(books)">
-            <div>
-                <input type="checkbox" x-model="books" id="harry" name="harry" value="1">
-                <label for="harry">Harry Potter</label>
-            </div>
-            <div>
-                <input type="checkbox" x-model="books" id="code" name="code" value="2">
-                <label for="code">Clean code</label>
-            </div>
-            <div>
-                <input type="checkbox" x-model="books" id="fleurs" name="fleurs" value="3">
-                <label for="fleurs">Les fleurs du mal</label>
-            </div>
-            <div class="mt-2">
-                <button class="btn btn-danger">Supprimer mes livres</button>
-            </div>
-        </form>
-    </section>
+            <form @submit.prevent="addTodo" class="mt-2 mb-5">
+                <input type="text" x-model="todoInput" class="form-control">
+            </form>
+
+            <template x-for="todo, index in todos" :key="todo.id">
+                <div class="row mt-1 align-items-center">
+                    <input type="checkbox" x-bind:value="todo.id" x-bind:id="todo.id" class="col-1" x-model.number="selectedTodos">
+                    <label x-bind:for="todo.id" x-text="todo.title" class="col-2" x-bind:class="{'p_style' : selectedTodos.includes(todo.id)}"></label>
+                    <button class="btn btn-danger col-2" @click="removeTodo(index)">Supprimer</button>
+                </div>
+            </template>
+
+        </section>
+        
+    </main>
 
     <!-- MDB -->
     <script
