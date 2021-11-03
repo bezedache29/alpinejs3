@@ -64,13 +64,13 @@
                         <a class="nav-link" href="slider.html">Slider</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="checkbox.html">Checkbox</a>
+                        <a class="nav-link" href="checkbox.html">Checkbox</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="bind.html">x-bind</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="boucle.html">x-for</a>
+                        <a class="nav-link active" href="boucle.html">x-for</a>
                     </li>
                 </ul>
                 <!-- Left links -->
@@ -80,40 +80,43 @@
         <!-- Navbar -->
     </div>
 
-    <section class="container my-3" x-data="{ remember: false }">
-        <form class="row gx-0" @submit.prevent="console.log(remember)">
-            <div>
-                <input type="checkbox" name="remember" id="remember" x-model="remember">
-                <label for="remember">Se souvenir de moi</label>
-            </div>
-            <div class="mt-2">
-                <button class="btn btn-primary">Se connecter</button>
-            </div>
-            <span x-show="remember">Choix mémorisé</span>
-        </form>
-    </section>
+    <main class="container my-3">
 
-    <hr class="my-3">
+        <section x-data="{ myArray: ['ordinateur', 'portable', 'serveur'] }">
+            <template x-for="array, index in myArray" :key="index">
+                <div>
+                    <span x-text="index"></span>
+                    <span x-text="array"></span>
+                </div>
+            </template>
+        </section>
 
-    <section class="container my-3">
-        <form x-data="{ books: [] }" @submit.prevent="console.log(books)">
-            <div>
-                <input type="checkbox" x-model="books" id="harry" name="harry" value="1">
-                <label for="harry">Harry Potter</label>
-            </div>
-            <div>
-                <input type="checkbox" x-model="books" id="code" name="code" value="2">
-                <label for="code">Clean code</label>
-            </div>
-            <div>
-                <input type="checkbox" x-model="books" id="fleurs" name="fleurs" value="3">
-                <label for="fleurs">Les fleurs du mal</label>
-            </div>
-            <div class="mt-2">
-                <button class="btn btn-danger">Supprimer mes livres</button>
-            </div>
-        </form>
-    </section>
+        <hr class="my-3">
+
+        <section x-data="
+            {
+                books: [
+                    {id: 1, title: 'Harry Potter', pages: 100},
+                    {id: 2, title: 'Clean code', pages: 200},
+                    {id: 3, title: 'Les fleurs du mal', pages: 300}
+                ],
+                addPage(id) {
+                    this.books.find(book => book.id === id).pages++
+                }
+            }
+        ">
+            <template x-for="book in books" :key="book.id" class="row gx-0">
+                <div class="d-flex align-items-center my-2">
+                    <span x-text="book.title" class="me-2"></span>
+                    <span class="me-2">:</span>
+                    <span x-text="book.pages" class="me-2"></span>
+                    <span class="me-2">pages</span>
+                    <button @click="addPage(book.id)" class="btn btn-primary">Ajouter une page</button>
+                </div>
+            </template>
+        </section>
+        
+    </main>
 
     <!-- MDB -->
     <script
