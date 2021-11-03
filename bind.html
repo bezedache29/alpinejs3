@@ -21,6 +21,11 @@
     rel="stylesheet"
     />
     <title>Alpine JS 3</title>
+    <style>
+        .p_green {
+            color: green;
+        }
+    </style>
 </head>
 <body>
     <div class="mb-2">
@@ -55,7 +60,7 @@
                 <!-- Left links -->
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="index.html">Accueil</a>
+                        <a class="nav-link" href="index.html">Accueil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="model.html">Model</a>
@@ -67,7 +72,7 @@
                         <a class="nav-link" href="checkbox.html">Checkbox</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="bind.html">x-bind</a>
+                        <a class="nav-link active" href="bind.html">x-bind</a>
                     </li>
                 </ul>
                 <!-- Left links -->
@@ -76,15 +81,35 @@
         </nav>
         <!-- Navbar -->
     </div>
-    <div class="container my-2">
-        <div x-data="{ text: false }">
-            <button class="btn btn-primary" @click="text = !text">Voir le texte</button>
-         
-            <span x-show="text">
-              Mon texte est visible !
-            </span>
-        </div>
-    </div>
+
+    <section class="container my-3" x-data="{ green: false }">
+        <span x-bind:class="{ 'p_green' : green }">Lorem ipsum dolor sit</span>
+        <button @click="green = true" class="btn btn-primary">Color green</button>
+        <button x-bind:disabled="green === false" class="btn btn-secondary" @click="alert('la couleur green est true')">Test</button>
+    </section>
+
+    <hr class="my-5">
+
+    <section 
+        class="container my-3" 
+        x-data="{ 
+            books: [
+                {id: 1, title: 'Harry Potter'},
+                {id: 2, title: 'Clean code'},
+                {id: 3, title: 'Les fleurs du mal'}
+            ],
+            selectedBooks: []
+        }"
+    >
+        <template x-for="book in books">
+            <div>
+                <input type="checkbox" x-bind:id="book.id" x-bind:value="book.id" x-model.number="selectedBooks">
+                <label x-bind:for="book.id" x-text="book.title" x-bind:class="{'p_green' : selectedBooks.includes(book.id)}"></label>
+            </div>
+        </template>
+
+        <span x-text="selectedBooks"></span>
+    </section>
 
     <!-- MDB -->
     <script

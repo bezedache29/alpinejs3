@@ -66,6 +66,9 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="checkbox.html">Checkbox</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="bind.html">x-bind</a>
+                    </li>
                 </ul>
                 <!-- Left links -->
             </div>
@@ -75,7 +78,7 @@
     </div>
 
     <section class="container my-3" x-data="{ remember: false }">
-        <form class="row gx-0" @submit.prevent="console.log('salut')">
+        <form class="row gx-0" @submit.prevent="console.log(remember)">
             <div>
                 <input type="checkbox" name="remember" id="remember" x-model="remember">
                 <label for="remember">Se souvenir de moi</label>
